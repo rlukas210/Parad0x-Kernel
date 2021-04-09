@@ -259,6 +259,17 @@ export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm64
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
+# Hardcode android_major_version in source since we are not using build script here
+export ANDROID_MAJOR_VERSION := r
+
+# We need to define this path because some lib(s) have been renamed and they cannot be located during 
+# rom compilation
+export LD_LIBRARY_PATH=/home/ubuntu/roms/dot/prebuilts/clang/host/linux-x86/proton-clang/lib/
+
+# Hardcode Eureka signature ^.^
+export KBUILD_BUILD_USER=Chatur
+export KBUILD_BUILD_HOST=Eureka.org
+
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
 SRCARCH 	:= $(ARCH)
