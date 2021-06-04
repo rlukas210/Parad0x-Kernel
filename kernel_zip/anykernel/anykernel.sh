@@ -5,7 +5,7 @@
 # begin properties
 properties() { '
 kernel.string=Eureka Kernel by Chatur27 & Gabriel260br @ xda-developers
-do.devicecheck=1
+do.devicecheck=0
 do.modules=0
 do.systemless=1
 do.cleanup=1
@@ -20,7 +20,7 @@ supported.patchlevels=
 '; } # end properties
 
 # shell variables
-block=/dev/block/platform/omap/omap_hsmmc.0/by-name/boot;
+block=/dev/block/platform/13500000.dwmmc0/by-name/boot;
 dtboblock=/dev/block/platform/13500000.dwmmc0/by-name/dtbo;
 is_slot_device=0;
 ramdisk_compression=auto;
