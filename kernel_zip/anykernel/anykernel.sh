@@ -25,7 +25,9 @@ dtboblock=/dev/block/platform/13500000.dwmmc0/by-name/dtbo;
 is_slot_device=0;
 ramdisk_compression=auto;
 
-
+install_dtb() {
+dd if=/tmp/anykernel/dtb.img /dev/block/platform/13500000.dwmmc0/by-name/dtb;
+}
 ## AnyKernel methods (DO NOT CHANGE)
 # import patching functions/variables - see for reference
 . tools/ak3-core.sh;
@@ -51,6 +53,10 @@ flash_boot;
 ui_print "- Installing/updating Eureka dtbo";
 ui_print " ";
 flash_dtbo;
+
+ui_print "- Installing/updating Eureka dtb";
+ui_print " ";
+install_dtb;
 
 mount /system/
 mount /system_root/
