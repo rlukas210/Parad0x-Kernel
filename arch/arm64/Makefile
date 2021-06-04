@@ -114,6 +114,8 @@ KBUILD_DTBS	:= dtbs
 
 KBUILD_DTBO_IMG := dtbo.img
 
+KBUILD_DTB_IMG := dtb.img
+
 all:	$(KBUILD_IMAGE) $(KBUILD_DTBS)
 
 boot := arch/arm64/boot
@@ -146,8 +148,11 @@ Image-dtb Image.gz-dtb: vmlinux scripts dtbs
 
 $(KBUILD_DTBO_IMG): dtbs
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
+	
+$(KBUILD_DTB_IMG): dtbs
+	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
-all: $(KBUILD_DTBO_IMG)
+all: $(KBUILD_DTBO_IMG) $(KBUILD_DTB_IMG)
 
 PHONY += vdso_install
 vdso_install:

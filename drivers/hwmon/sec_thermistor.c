@@ -204,7 +204,7 @@ static int convert_adc_to_temper(struct sec_therm_info *info, unsigned int adc)
 #ifdef CONFIG_NO_THROTTLING 
 	return 200;
 #else
-        return temp;
+	return temp;
 #endif
 }
 
