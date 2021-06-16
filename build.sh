@@ -153,6 +153,7 @@ CLANG_CLEAN()
 	     rm -rf arch/$ARCH/boot/dtbo.img
 	     rm -rf kernel_zip/anykernel/Image
 	     rm -rf kernel_zip/anykernel/dtbo.img
+	     rm -rf kernel_zip/anykernel/modules/vendor/lib/modules/*.ko
 	  }
 	fi
 	
@@ -247,11 +248,16 @@ CLANG()
 	make -j$CORES O=out \
 	ARCH=arm64 \
 	ANDROID_MAJOR_VERSION=$ANDROID \
-	CC=clang \
+	CC=clang LD=ld.lld \
+	CFLAGS_MODULE=-fno-pic \
 	LD_LIBRARY_PATH="$KERNEL_DIR/toolchain/lib:$LD_LIBRARY_PATH" \
 	CLANG_TRIPLE=aarch64-linux-gnu- \
 	CROSS_COMPILE=$GCC_ARM64_FILE \
 	CROSS_COMPILE_ARM32=$GCC_ARM32_FILE
+	make O=out ARCH=arm64 ANDROID_MAJOR_VERSION=$ANDROID \
+	INSTALL_MOD_PATH=out_mod modules_install
+	echo "30s, pause the shell"
+	read -p "PRESS OKAY"
 }
 
 ZIPPIFY()
@@ -271,10 +277,10 @@ ZIPPIFY()
 		cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
 		cp -f arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
 		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
-		
+		#cp -f 
 		# Go to anykernel directory
 		cd kernel_zip/anykernel
-		zip -r9 $ZIPNAME META-INF tools anykernel.sh Image dtb.img dtbo.img version
+		zip -r9 $ZIPNAME META-INF modules tools anykernel.sh Image dtb.img dtbo.img version
 		chmod 0777 $ZIPNAME
 		# Change back into kernel source directory
 		cd ..
