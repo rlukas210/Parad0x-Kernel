@@ -248,14 +248,22 @@ CLANG()
 	make -j$CORES O=out \
 	ARCH=arm64 \
 	ANDROID_MAJOR_VERSION=$ANDROID \
-	CC=clang LD=ld.lld \
-	CFLAGS_MODULE=-fno-pic \
+	CC=clang LD=ld.lld CFLAGS_MODULE=-fno-pic \
 	LD_LIBRARY_PATH="$KERNEL_DIR/toolchain/lib:$LD_LIBRARY_PATH" \
 	CLANG_TRIPLE=aarch64-linux-gnu- \
 	CROSS_COMPILE=$GCC_ARM64_FILE \
 	CROSS_COMPILE_ARM32=$GCC_ARM32_FILE
-	make O=out ARCH=arm64 ANDROID_MAJOR_VERSION=$ANDROID \
-	INSTALL_MOD_PATH=out_mod modules_install
+
+	#make O=out ARCH=arm64 ANDROID_MAJOR_VERSION=$ANDROID \
+	#INSTALL_MOD_PATH=out_mod modules_install
+	#cd out/out_mod/lib/modules/Eu*/R/
+	#mkdir -p modules
+	#rm -rf source build
+	for i in $(find -name "*.ko");
+	do cp -f $i kernel_zip/anykernel/modules/vendor/lib/modules;
+	done
+	#cp -f modules.* modules
+	#mv modules 
 	echo "30s, pause the shell"
 	read -p "PRESS OKAY"
 }
@@ -275,7 +283,7 @@ ZIPPIFY()
 		
 		# Copy Image and dtbo.img to anykernel directory
 		cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
-		cp -f arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
+		cp -f out/arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
 		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
 		#cp -f 
 		# Go to anykernel directory
