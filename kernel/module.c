@@ -1429,7 +1429,7 @@ static int check_version(Elf_Shdr *sechdrs,
 bad_version:
 	pr_warn("%s: disagrees about version of symbol %s\n",
 	       mod->name, symname);
-	return 0;
+	return 1;
 }
 
 static inline int check_modstruct_version(Elf_Shdr *sechdrs,
@@ -4264,6 +4264,7 @@ static int load_module(struct load_info *info, const char __user *uargs,
 	//FIXME
 	flags |= MODULE_INIT_IGNORE_MODVERSIONS;
 	flags |= MODULE_INIT_IGNORE_VERMAGIC;
+
 	err = elf_header_check(info);
 	if (err)
 		goto free_copy;
