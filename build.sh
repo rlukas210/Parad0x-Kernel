@@ -271,7 +271,7 @@ ZIPPIFY()
 		
 		# Copy Image and dtbo.img to anykernel directory
 		cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
-		cp -f arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
+		cp -f out/arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
 		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
 		cp -f $(find -name "*.ko") kernel_zip/anykernel/modules/vendor/lib/modules
 		# Go to anykernel directory
