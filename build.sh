@@ -254,10 +254,6 @@ CLANG()
 	CLANG_TRIPLE=aarch64-linux-gnu- \
 	CROSS_COMPILE=$GCC_ARM64_FILE \
 	CROSS_COMPILE_ARM32=$GCC_ARM32_FILE
-	make O=out ARCH=arm64 ANDROID_MAJOR_VERSION=$ANDROID \
-	INSTALL_MOD_PATH=out_mod modules_install
-	echo "30s, pause the shell"
-	read -p "PRESS OKAY"
 }
 
 ZIPPIFY()
@@ -277,7 +273,7 @@ ZIPPIFY()
 		cp -f arch/$ARCH/boot/Image kernel_zip/anykernel/Image
 		cp -f arch/$ARCH/boot/dtb.img kernel_zip/anykernel/dtb.img
 		cp -f arch/$ARCH/boot/dtbo.img kernel_zip/anykernel/dtbo.img
-		#cp -f 
+		cp -f $(find -name "*.ko") kernel_zip/anykernel/modules/vendor/lib/modules
 		# Go to anykernel directory
 		cd kernel_zip/anykernel
 		zip -r9 $ZIPNAME META-INF modules tools anykernel.sh Image dtb.img dtbo.img version
